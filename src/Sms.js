@@ -23,37 +23,67 @@ import axios from 'axios';
 
 class Sms extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      // func : this.someFunction(),
+      isOnDefaultToggleSwitch: true,
+      isOnLargeToggleSwitch: false,
+      isOnBlueToggleSwitch: false,
+      sms: [],
+    };
+  
+  }
+
   componentDidMount() {
     axios.get(`https://api.jalaindo.com/smscenter/androidtosent?modem_id=MA111111111&limit=5`)
       .then(res => {
         const sms = res.data.sms_to_sent;
         this.setState({ sms });
-        console.log(sms)
+        // console.log(sms)
       })
   }
+
+  
   someFunction() {
+   
+    
+    for(var i = 0; i <  this.state.sms.length; ){
+      console.log(this.state.sms[i]);
+      i++
+      // SmsAndroid.sms(
+      //   this.state.sms.map.msisdn_receiver.String(), // phone number to send sms to
+      //   this.state.sms.map.message.String(), // sms body
+      //   'sendDirect', // sendDirect or sendIndirect
+      //   (err, message) => {
+      //     if (err) {
+      //       console.log(err);
+      //       i++
+      //     } else {
+      //       i++
+      //       console.log(message); // callback message
+      //     }
+      //   }
+      // );
+    }
     SmsAndroid.sms(
-      '+6281286159467', // phone number to send sms to
-      'This is the sms text', // sms body
+      
+      this.state.sms.msisdn_receiver, // phone number to send sms to
+      'cek cek ', // sms body
       'sendDirect', // sendDirect or sendIndirect
       (err, message) => {
         if (err) {
           console.log(err);
+          i++
         } else {
+          i++
           console.log(message); // callback message
         }
       }
     );
   }
 
-  state = {
-    // func : this.someFunction(),
-    isOnDefaultToggleSwitch: true,
-    isOnLargeToggleSwitch: false,
-    isOnBlueToggleSwitch: false,
-    sms: [],
-  };
-
+  
   onToggle(isOn) {
     if (isOn) {
       this.someFunction();
@@ -109,8 +139,6 @@ class Sms extends Component {
           )}
 
         </Content>
-
-
       </Container>
     );
   }
