@@ -32,8 +32,11 @@ class Sms extends Component {
       isOnBlueToggleSwitch: false,
       sms: [],
     };
-  
+    const no = this.state.sms.msisdn_receiver
+    console.log(no)
   }
+
+  
 
   componentDidMount() {
     axios.get(`https://api.jalaindo.com/smscenter/androidtosent?modem_id=MA111111111&limit=5`)
@@ -68,7 +71,7 @@ class Sms extends Component {
     }
     SmsAndroid.sms(
       
-      this.state.sms.msisdn_receiver, // phone number to send sms to
+      this.state.sms.map(no => no.msisdn_receiver), // phone number to send sms to
       'cek cek ', // sms body
       'sendDirect', // sendDirect or sendIndirect
       (err, message) => {
